@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class MiCharacterController : MonoBehaviour
@@ -12,6 +13,7 @@ public class MiCharacterController : MonoBehaviour
     private float sprintSpeed = 20f;
     private float jumpHeight = 2.0f;
     private float gravityValue = -15f;
+
 
     private void Start()
     {
@@ -33,6 +35,9 @@ public class MiCharacterController : MonoBehaviour
         float vertical = Input.GetAxis("Vertical");
 
         float sprinting = Input.GetAxis("Fire3");
+     
+
+       
 
         Vector3 move;
 
@@ -44,7 +49,7 @@ public class MiCharacterController : MonoBehaviour
         anim.SetFloat("SpeedZ", vertical);
         anim.SetFloat("SpeedMag", move.magnitude);
 
-        
+        UpdateIsSprinting();
 
         if (Input.GetButtonDown("Jump") && groundedPlayer)
         {
@@ -52,6 +57,14 @@ public class MiCharacterController : MonoBehaviour
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
-        controller.Move(playerVelocity * Time.deltaTime);
+        controller.Move(playerVelocity * Time.deltaTime);   
+        
+        
+    }
+
+    private void UpdateIsSprinting()
+    {
+        bool isSprinting = Input.GetKey(KeyCode.LeftShift);
+        anim.SetBool("isSprinting", isSprinting);
     }
 }
